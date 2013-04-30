@@ -1,5 +1,7 @@
 package gui;
 
+import graphics.DisplayFarm;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -28,6 +30,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import server.Catalog;
+
 import local_cont.Local_Control;
 
 import XML_Handler.XML_Handler;
@@ -52,7 +56,7 @@ public class WaterProjectGUI extends JFrame implements ActionListener, ChangeLis
   JPanel border2;
   
   JList lst;
-
+  DisplayFarm display;
   DefaultListModel listModel = new DefaultListModel();
   private Local_Control cont;
   
@@ -648,6 +652,10 @@ public Farm getFarm()
 {
   return f;	
 }
+public void setDisplayFarm(DisplayFarm dis)
+{
+  display = dis;	
+}
 public void displayLat(double latitude)
 {
   lat_label.setText("Latitude (in decimal) = " + latitude);	
@@ -750,9 +758,12 @@ public void actionPerformed(ActionEvent e)
 	    {
 		  //String s = "$"+sellInput1.getText()+" per unit; " +"Quantity:"+ sellInput2.getText()+" ;GUI No:"+getGuiNumber();
 		  //AllGUIs.messageGUIs(s);
-	      cont.sell_water(Integer.parseInt(sellInput2.getText()), 
-	    		          Double.parseDouble(sellInput1.getText()),
-	    		          Integer.toString(getGuiNumber()));
+	      String merchant = Integer.toString(getGuiNumber());
+	      int quantity = Integer.parseInt(sellInput2.getText());
+	      double unitPrice = Double.parseDouble(sellInput1.getText());
+	      
+	      
+	      cont.sell_water(quantity,unitPrice,merchant);
 	    }
 	    sellInput1.setText("");
 	    sellInput2.setText("");
@@ -981,6 +992,7 @@ public void stateChanged(ChangeEvent e)
   {
     adjusted = false;
     //Pass all the X1,X2,Y1,Y2,Z1,Z2 values in order to update graphics.
+    display.setRange(valX1,valX2,valY1,valY2,valZ1,valZ2);
   }
 }
 

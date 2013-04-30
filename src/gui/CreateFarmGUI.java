@@ -145,7 +145,10 @@ public class CreateFarmGUI extends JFrame implements ActionListener, ChangeListe
 		this.configPath = configPath;
 	}
 
-
+    public DisplayFarm getDisplayFarm()
+    {
+      return displayFarm;	
+    }
 
 
 	@Override
@@ -176,7 +179,7 @@ public class CreateFarmGUI extends JFrame implements ActionListener, ChangeListe
 	    //xmlHandler.initGround(farm, this.getConfigPath());
 	    
 	    this.displayFarm = new DisplayFarm(this.farm, this.panel);
-	    
+	    g.setDisplayFarm(this.displayFarm);
 	    
 	  }
 	  else if(obj == browse)
